@@ -35,10 +35,7 @@ export class InputComponent
   implements ControlValueAccessor {
 
   constructor() {
-    toObservable<ElementRef<HTMLInputElement> | undefined>(this.htmlInputElementRef$).pipe<ElementRef<HTMLInputElement>, [ ElementRef<HTMLInputElement>, string | undefined ], [ ElementRef<HTMLInputElement>, string | undefined ]>(
-      filter<ElementRef<HTMLInputElement> | undefined, ElementRef<HTMLInputElement>>(
-        (htmlInputElementRef?: ElementRef<HTMLInputElement>): htmlInputElementRef is ElementRef<HTMLInputElement> => !!htmlInputElementRef,
-      ),
+    toObservable<ElementRef<HTMLInputElement>>(this.htmlInputElementRef$).pipe<[ ElementRef<HTMLInputElement>, string | undefined ], [ ElementRef<HTMLInputElement>, string | undefined ]>(
       combineLatestWith<ElementRef<HTMLInputElement>, [ string | undefined ]>(toObservable<string | undefined>(this.maskInput$)),
       takeUntilDestroyed<[ ElementRef<HTMLInputElement>, string | undefined ]>(this.destroyRef),
     ).subscribe(
